@@ -1,0 +1,25 @@
+{
+  "name": "peerWork",
+  "version": "1.0.0",
+  "description": "increase productivity working peer to peer.",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beknazar/peerWork.git"
+  },
+  "author": "Bek Abdik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/beknazar/peerWork/issues"
+  },
+  "homepage": "https://github.com/beknazar/peerWork",
+  "dependencies": {
+    "express": "^4.13.1",
+    "express-stormpath": "^1.0.5",
+    "jade": "^1.11.0",
+    "xtend": "^4.0.0"
+  }
+}
