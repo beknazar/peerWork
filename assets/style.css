@@ -20,6 +20,24 @@ html, body {
   padding: 0;
 }
 
+/* My adds */
+
+.demo-card-image.mdl-card {
+  width: 256px;
+  height: 256px;
+  background: url('img/me.jpg') center / cover;
+  margin-left: auto;
+  margin-right: auto;
+}
+.demo-card-image > .mdl-card__actions {
+  height: 52px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.demo-card-image__filename {
+  color: #fff;
+}
+
 .mdl-demo .mdl-layout__header-row h3, h4 {
   margin-left: auto;
   margin-right: auto;
@@ -64,7 +82,8 @@ html, body {
   padding-top: 48px;
 }
 .mdl-demo .mdl-card {
-  height: auto;
+  /*height: inherit;*/
+  min-height: inherit;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
