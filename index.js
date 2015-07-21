@@ -1,7 +1,11 @@
-var express = require ('express'),
+/*jshint node:true */
+/*jslint browser: true*/
+/*global $, jQuery*/
+
+var express = require('express'),
 	redis = require('redis'),
 	cookieParser = require('cookie-parser'),
-	stormpath = require ('express-stormpath'),
+	stormpath = require('express-stormpath'),
 	randomstring = require('randomstring'),
 	session = require('express-session'),
 	redisStore = require('connect-redis')(session);
@@ -13,9 +17,9 @@ var client = redis.createClient(), //CREATE REDIS CLIENT
 app.use(cookieParser('r30kKwv3sA6ExrJ9OmLSm4Wo3n'));
 
 app.use(session({
-    secret: 'cookie_secret',
-    resave: true,
-    saveUninitialized: true
+	secret: 'cookie_secret',
+	resave: true,
+	saveUninitialized: true
 }));
 
 /* Assets folder */
@@ -27,38 +31,40 @@ app.set('view engine', 'jade');
 
 /* Routing */
 app.get('/', function (req, res) {
-	
+	lastPage = req.session.lastPage;
+	req.session.code = randomstring.generate(7);
+	url = 'http://' + req.get('host') + '/' + req.session.code;
+	req.session.lastPage = 'home';
 	res.render('home', {
 		title: 'peerWork',
 		description: 'increase your productivity by working peer to peer',
-		lastPage: req.session.lastPage
+		lastPage: lastPage,
+		url: url
 	});
-	req.session.lastPage = 'home';
-	// console.log(req.session.lastPage);
+	
 });
 
-app.get('/tubular', function(req, res) {
-  
-
-  req.session.lastPage = '/tubular';
-  if(req.session.lastPage) {
-    res.write('Last page was: ' + req.session.lastPage + '. ');
-  }
-  res.write('Are you a surfer?');
-  res.end();
+app.get('/:code', function (req, res) {
+	code = req.params.code;
+	if (code == req.session.code) {
+		res.send('Welcome, sir/madam!');	
+	}
+	
 });
 
-app.get('/radical', function(req, res) {
-  if(req.session.lastPage) {
-    res.write('Last page was: ' + req.session.lastPage + '. ');
-  }
+app.get('/tubular', function (req, res) {
+	lastPage = '';
+	if(req.session.lastPage) {
+		lastPage = req.session.lastPage;
+	}
 
-  req.session.lastPage = '/radical';
-  res.write('What a radical visit!');
-  res.end();
+	res.write('Last page was: ' + lastPage + '. ', function () {
+		req.session.lastPage = '/tubular';
+		res.write('Are you a surfer?', function() {
+			res.end();
+		});
+	});
+	
 });
-
-// randomstring.generate(7);
-// >> "xqm5wXX"
 
 app.listen(3000);

@@ -22,20 +22,20 @@ html, body {
 
 /* My adds */
 
-.demo-card-image.mdl-card {
-  width: 256px;
-  height: 256px;
-  background: url('img/me.jpg') center / cover;
-  margin-left: auto;
-  margin-right: auto;
+.section--center #startButton {
+  display: none;
 }
-.demo-card-image > .mdl-card__actions {
-  height: 52px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.2);
+
+.section--center {
+  text-align: center;
 }
-.demo-card-image__filename {
-  color: #fff;
+
+.mdl-card__supporting-text button {
+  text-transform: lowercase;
+}
+
+.mdl-card__supporting-text i {
+  margin-left: 8px;
 }
 
 .mdl-demo .mdl-layout__header-row h3, h4 {
