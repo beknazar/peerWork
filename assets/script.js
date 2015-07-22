@@ -24,7 +24,49 @@ $(document).ready(function(){
 		// request.fail(function (jqXHR, textStatus) {
 		// 	alert('Request failed: ' + textStatus);
 		// });
+	});
 
+	$('#addTaskForm').submit(function (event) {
+		var taskName = $('#taskName').val();
+		var root = location.protocol + '//' + location.host;
+		if (taskName) {
+			$.ajax({
+				url: root + '/add',
+				type: 'POST',
+				data: {
+					taskName: taskName
+				},
+				success: function (data) {
+					$('<label/>', {
+					    class: 'mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect'
+					}).appendTo('#myTasksList');
+
+					var addingElement = $('#myTasksList label:last-child');
+					
+					$('<input/>', {
+						type: 'checkbox',
+						class: 'mdl-checkbox__input'
+					}).appendTo(addingElement);
+
+					$('<span/>', {
+						text: taskName,
+						class: 'mdl-checkbox__label'
+					}).appendTo(addingElement);
+
+					addingElement.fadeIn('slow').attr;
+					addingElement.css('display', 'inline-block');
+					$('#taskName').val('');
+				}
+			});
+		}
+		return false;
+	});
+
+	$('#task').click(function (event) {
+		var request = 
+		$.ajax({
+			url: ''
+		});
 	});
 
 });

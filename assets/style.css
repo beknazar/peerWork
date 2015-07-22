@@ -22,6 +22,24 @@ html, body {
 
 /* My adds */
 
+#hiddenTask {
+  display: none;
+}
+
+#taskListElement {
+  display: inline-block;
+  width: 100%;
+}
+
+.textfield-demo {
+  width: 200px;
+  margin-top: 50px;
+}
+
+#controlArea {
+  display: -webkit-box;
+}
+
 #spinnerCallFriend {
   display: none;
   margin-left: auto;
@@ -53,7 +71,7 @@ html, body {
   margin-left: 8px;
 }
 
-.mdl-demo .mdl-layout__header-row h3, h4 {
+.mdl-demo .mdl-layout__header-row h2, h4 {
   margin-left: auto;
   margin-right: auto;
 }

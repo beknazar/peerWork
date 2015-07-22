@@ -7,14 +7,20 @@ block content
 			div(class='section__circle-container__circle mdl-color--accent section__circle--big')
 		div(class='section__text mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone')
 			h5 You
-			ul
-				li Task 1
-				li Task 2
-				li Task 3
+			div(id='myTasksList')
+				for task in myTasks
+					label(class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect')
+						input(type='checkbox' class='mdl-checkbox__input')
+						span(class='mdl-checkbox__label')=task
+			form(action='#', id='addTaskForm')
+				div(class='mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo')
+					input(class='mdl-textfield__input', type='text', id='taskName')
+					label(class='mdl-textfield__label', for='taskName') New task...
 		div(class='section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone')
 			div(class='section__circle-container__circle mdl-color--accent section__circle--big')
 		div(class='section__text mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone')
 			h5 Friend
 			ul
-				li Task 1
-				li Task 2
+				for task in friendTasks
+					li=task
+	div=author

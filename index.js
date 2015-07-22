@@ -8,10 +8,13 @@ var express = require('express'),
 	stormpath = require('express-stormpath'),
 	randomstring = require('randomstring'),
 	session = require('express-session'),
-	redisStore = require('connect-redis')(session);
+	redisStore = require('connect-redis')(session),
+	qs = require('querystring'),
+	vars = require('./vars');
 
-var client = redis.createClient(), //CREATE REDIS CLIENT
+var client = redis.createClient(), // Create redis client
 	app = express();
+
 
 /* Session variables */
 app.use(cookieParser('r30kKwv3sA6ExrJ9OmLSm4Wo3n'));
@@ -36,7 +39,7 @@ app.get('/', function (req, res) {
 		req.session.code = randomstring.generate(7);
 		url = 'http://' + req.get('host') + '/' + req.session.code;
 		res.render('home', {
-			title: 'peerWork',
+			title: vars.name,
 			description: 'increase your productivity by working peer to peer',
 			url: url
 		});
@@ -45,8 +48,8 @@ app.get('/', function (req, res) {
 		console.log('logged');
 		url = 'http://' + req.get('host') + '/' + req.session.code;
 		res.render('home', {
-			title: 'peerWork',
-			description: 'increase your productivity by working peer to peer',
+			title: vars.name,
+			description: vars.description,
 			url: url
 		});
 	}
@@ -55,21 +58,44 @@ app.get('/', function (req, res) {
 app.get('/:code', function (req, res) {
 	code = req.params.code;
 	if (code == req.session.code) {
-		req.session.logged = 1;
-		res.render('friend', {
-			title: 'peerWork',
-			description: 'increase your productivity by working peer to peer',
-			author: 'me'
-		});
+		author = 'me';
 	}
 	else {
-		req.session.loggedAsFriend = 1;
-		res.render('friend', {
-			title: 'peerWork',
-			description: 'increase your productivity by working peer to peer',
-			author: 'me'
-		});
+		author = 'friend';
 	}
+	myTasks = {};
+	friendTasks = {};
+	if (req.session.myTasks)
+		myTasks = req.session.myTasks;
+	if (req.session.friendTasks)
+		friendTasks = req.session.friendTasks
+
+	res.render('friend', {
+		title: vars.name,
+		description: vars.description,
+		myTasks: myTasks,
+		myTasks: friendTasks,
+		author: author
+	});
+});
+
+app.post('/add', function (req, res) {
+	var body = '';
+	req.on('data', function (data) {
+		body += data;
+		// Too much data -> destroy the connection
+		if (body.length > 1e3)
+			req.connection.destroy();
+	});
+	req.on('end', function() {
+		var taskName = qs.parse(body)['taskName'];
+		console.log('put: ' + taskName);
+		res.send('successful');
+	});
+});
+
+app.delete('/del?id=:id', function (req, res) {
+	console.log('delete: '+id);
 });
 
 app.get('/tubular', function (req, res) {
