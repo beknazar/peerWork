@@ -31,25 +31,45 @@ app.set('view engine', 'jade');
 
 /* Routing */
 app.get('/', function (req, res) {
-	lastPage = req.session.lastPage;
-	req.session.code = randomstring.generate(7);
-	url = 'http://' + req.get('host') + '/' + req.session.code;
-	req.session.lastPage = 'home';
-	res.render('home', {
-		title: 'peerWork',
-		description: 'increase your productivity by working peer to peer',
-		lastPage: lastPage,
-		url: url
-	});
-	
+	if (req.session.logged != 1) {
+		console.log('not logged');
+		req.session.code = randomstring.generate(7);
+		url = 'http://' + req.get('host') + '/' + req.session.code;
+		res.render('home', {
+			title: 'peerWork',
+			description: 'increase your productivity by working peer to peer',
+			url: url
+		});
+	}
+	else {
+		console.log('logged');
+		url = 'http://' + req.get('host') + '/' + req.session.code;
+		res.render('home', {
+			title: 'peerWork',
+			description: 'increase your productivity by working peer to peer',
+			url: url
+		});
+	}
 });
 
 app.get('/:code', function (req, res) {
 	code = req.params.code;
 	if (code == req.session.code) {
-		res.send('Welcome, sir/madam!');	
+		req.session.logged = 1;
+		res.render('friend', {
+			title: 'peerWork',
+			description: 'increase your productivity by working peer to peer',
+			author: 'me'
+		});
 	}
-	
+	else {
+		req.session.loggedAsFriend = 1;
+		res.render('friend', {
+			title: 'peerWork',
+			description: 'increase your productivity by working peer to peer',
+			author: 'me'
+		});
+	}
 });
 
 app.get('/tubular', function (req, res) {

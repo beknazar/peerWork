@@ -22,6 +22,21 @@ html, body {
 
 /* My adds */
 
+#spinnerCallFriend {
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px;
+}
+
+.section--footer {
+  
+}
+
+.vertical_line {
+  border-left: thick solid #ff0000;
+}
+
 .section--center #startButton {
   display: none;
 }
