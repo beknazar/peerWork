@@ -15,6 +15,9 @@ var express = require('express'),
 var client = redis.createClient(), // Create redis client
 	app = express();
 
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('./task.db');
+
 
 /* Session variables */
 app.use(cookieParser('r30kKwv3sA6ExrJ9OmLSm4Wo3n'));
@@ -56,19 +59,31 @@ app.get('/', function (req, res) {
 });
 
 app.get('/:code', function (req, res) {
-	code = req.params.code;
+	var code = req.params.code;
 	if (code == req.session.code) {
-		author = 'me';
+		req.session.author = 1;
 	}
 	else {
-		author = 'friend';
+		req.session.author = 0;
 	}
-	myTasks = {};
-	friendTasks = {};
-	if (req.session.myTasks)
-		myTasks = req.session.myTasks;
-	if (req.session.friendTasks)
-		friendTasks = req.session.friendTasks
+	var author = req.session.author;
+	var sqlQuery = "SELECT * FROM sessionList WHERE sessionName = '" + String(code) + "';";
+	db.get(sqlQuery, function(err, row) {
+		if (err) {
+			console.log(err);
+		}
+		else {
+			if (!row) {
+				db.run("INSERT INTO sessionList (sessionName) VALUES ('" + code + "')");
+			}
+			else {
+				console.log(rows);
+			}
+			db.get("SELECT rowid FROM sessionList WHERE sessionName = '" + String(code) + "';", function (err, row) {
+				req.session.sessionID = row.rowid;
+			})
+		}
+	});
 
 	res.render('friend', {
 		title: vars.name,
@@ -80,7 +95,11 @@ app.get('/:code', function (req, res) {
 });
 
 app.post('/add', function (req, res) {
+	if (req.session.myTasks)
+		myTasks = req.session.myTasks;
 	var body = '';
+	var author = req.session.author;
+	var sessionID = req.session.sessionID;
 	req.on('data', function (data) {
 		body += data;
 		// Too much data -> destroy the connection
@@ -90,6 +109,7 @@ app.post('/add', function (req, res) {
 	req.on('end', function() {
 		var taskName = qs.parse(body)['taskName'];
 		console.log('put: ' + taskName);
+		db.run("INSERT INTO taskList(sessionID, taskName, me) VALUES ('" + sessionID + "', '" + taskName + "', '" + author + "');");
 		res.send('successful');
 	});
 });

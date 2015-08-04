@@ -2,10 +2,8 @@
 extends layout
 
 block content
-	section(class='section--footer mdl-color--white mdl-grid',  id='controlArea')
-		div(class='section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone')
-			div(class='section__circle-container__circle mdl-color--accent section__circle--big')
-		div(class='section__text mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone')
+	div(class='container', id='controlArea')
+		div(class='col-sm-6')
 			h5 You
 			div(id='myTasksList')
 				for task in myTasks
@@ -13,12 +11,11 @@ block content
 						input(type='checkbox' class='mdl-checkbox__input')
 						span(class='mdl-checkbox__label')=task
 			form(action='#', id='addTaskForm')
-				div(class='mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo')
-					input(class='mdl-textfield__input', type='text', id='taskName')
-					label(class='mdl-textfield__label', for='taskName') New task...
-		div(class='section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone')
-			div(class='section__circle-container__circle mdl-color--accent section__circle--big')
-		div(class='section__text mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone')
+				div(class='form-control-wrapper')
+					input(class='form-control empty', type='text', id='taskName')
+					div(class='floating-label') New task...
+					span(class='material-input')
+		div(class='col-sm-6')
 			h5 Friend
 			ul
 				for task in friendTasks

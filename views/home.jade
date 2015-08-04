@@ -2,21 +2,22 @@
 extends layout
 
 block content
+
 	div(class='mdl-spinner mdl-js-spinner is-active', id='spinnerCallFriend')
-	div(class='mdl-layout__tab-panel is-active', id='callFriend')
-		section(class='section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp')
-			div(class='mdl-card mdl-cell mdl-cell--12-col')
-				div(class='mdl-card__supporting-text')
-					h4 Call your friend
-					span Give the following url to your friend to start working:
-					p
-						for(action='#')
-							div(class='mdl-textfield mdl-js-textfield textfield-demo')
-								input(class='mdl-textfield__input', type='text', id='url', value=url, readonly='readonly')
-							br
-							button(class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent', id='startButton') Start!
-						//- i(class='material-icons') content_copy
-				//- div(class='mdl-card__actions')
-					a(class='mdl-button', href='#') Call
+	div(class='container')
+		div(class='row')
+			div(class='col-xs-6 col-md-4')
+			div(class='col-xs-6 col-md-4 text-center')
+				h3 Call your friend
+				span Give the following url to your friend to start working:
+				div(class='startForm')
+					for(action='#')
+						input(class='form-control form-control-success', type='text', id='url', value=url, readonly='readonly')
+						br
+						button(class='btn btn-primary', id='startButton') Start!
+			div(class='col-xs-6 col-md-4')
+					//- i(class='material-icons') content_copy
+			//- div(class='mdl-card__actions')
+				a(class='mdl-button', href='#') Call
 	
 

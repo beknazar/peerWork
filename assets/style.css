@@ -22,6 +22,27 @@ html, body {
 
 /* My adds */
 
+.checkbox .checkbox-material .check {
+  margin-right: 7px;
+}
+
+.checkbox .checkbox-material {
+  vertical-align: bottom;
+}
+
+#addTaskForm {
+  margin-top: 100px;
+}
+
+.container-fluid {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+#myTasksList {
+  /*display: table-caption;*/
+}
+
 #hiddenTask {
   display: none;
 }
@@ -40,6 +61,14 @@ html, body {
   display: -webkit-box;
 }
 
+.startForm {
+  margin-top: 50px;
+}
+
+.startForm input {
+  text-align: center;
+}
+
 #spinnerCallFriend {
   display: none;
   margin-left: auto;
@@ -55,7 +84,7 @@ html, body {
   border-left: thick solid #ff0000;
 }
 
-.section--center #startButton {
+#startButton {
   display: none;
 }
 

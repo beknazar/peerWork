@@ -37,24 +37,18 @@ $(document).ready(function(){
 					taskName: taskName
 				},
 				success: function (data) {
-					$('<label/>', {
-					    class: 'mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect'
+					$('<div/>', {
+					    class: 'checkbox'
 					}).appendTo('#myTasksList');
 
-					var addingElement = $('#myTasksList label:last-child');
-					
-					$('<input/>', {
-						type: 'checkbox',
-						class: 'mdl-checkbox__input'
-					}).appendTo(addingElement);
+					var addingElement = $('#myTasksList div:last-child');
 
-					$('<span/>', {
-						text: taskName,
-						class: 'mdl-checkbox__label'
-					}).appendTo(addingElement);
+					addingElement = addingElement.append($('<label>').append($('<input>', {
+						type: 'checkbox'
+					})).append('<span class=\'checkbox-material\'><span class=\'check\'></span>'+taskName+'</span>'));
 
 					addingElement.fadeIn('slow').attr;
-					addingElement.css('display', 'inline-block');
+					// addingElement.css('display', 'inline-block');
 					$('#taskName').val('');
 				}
 			});
